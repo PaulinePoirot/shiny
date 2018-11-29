@@ -1,5 +1,7 @@
 package android.shiny.view;
 
+import android.content.Context;
+
 import android.shiny.R;
 
 import android.shiny.data.PokemonService;
@@ -9,18 +11,10 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-
-
-import javax.security.auth.login.LoginException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +47,15 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
                 adapter.setPokemons(response.body().getResults());
+
+                Context context = rv_pokemon.getContext();
+                LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down);
                 rv_pokemon.setAdapter(adapter);
+
+                rv_pokemon.setLayoutAnimation(controller);
+
+                rv_pokemon.getAdapter().notifyDataSetChanged();
+                rv_pokemon.scheduleLayoutAnimation();
             }
 
             @Override
