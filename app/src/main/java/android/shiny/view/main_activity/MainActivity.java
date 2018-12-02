@@ -1,4 +1,4 @@
-package android.shiny.view;
+package android.shiny.view.main_activity;
 
 import android.content.Context;
 
