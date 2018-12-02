@@ -3,7 +3,7 @@ package data;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public interface persistantData {
+public interface DataInterface {
 
     Hashtable getPokemonById(int pokemonId);
 
@@ -14,5 +14,7 @@ public interface persistantData {
     ArrayList getPokemonVarieties(int pokemonId);
 
     ArrayList getPokemonsPreview();
+
+    void updatePokemonsList();
 
 }

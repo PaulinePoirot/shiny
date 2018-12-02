@@ -3,7 +3,7 @@ package data;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-public class data implements dataInterface {
+public class data implements DataInterface {
 
     private Room room = new Room();
     private PokeApi pokeApi = new PokeApi();

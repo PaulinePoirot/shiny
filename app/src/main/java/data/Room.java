@@ -4,7 +4,7 @@ package data;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-class Room implements persistantData {
+class Room implements PersistantData {
 
     public Room() {
 
