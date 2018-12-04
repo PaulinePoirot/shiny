@@ -1,6 +1,6 @@
-package android.shiny.data;
+package android.shiny.api;
 
-import android.shiny.model.PokemonSpecies;
+import android.shiny.api.PokemonSpecies;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -10,6 +10,8 @@ public interface PokemonService {
 
     @GET("pokemon-species")
     Call<PokemonSpecies> listPokemons();
+
+
 
     /*@GET("pokemon-species/{id}")
     Call<List<PokemonSpecies>> pokemonData(@Path("id") String id);

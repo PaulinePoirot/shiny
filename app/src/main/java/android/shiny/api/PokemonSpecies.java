@@ -1,4 +1,4 @@
-package android.shiny.model;
+package android.shiny.api;
 
 import java.util.List;
 

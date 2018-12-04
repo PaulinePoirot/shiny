@@ -1,7 +1,10 @@
 package android.shiny.view;
 
 import android.shiny.R;
-import android.shiny.model.PokemonSpecies;
+// import android.shiny.model.PokemonSpecies;
+import android.shiny.api.PokemonSpecies;
+
+
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

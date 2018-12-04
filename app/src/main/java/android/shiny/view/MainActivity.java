@@ -4,8 +4,12 @@ import android.content.Context;
 
 import android.shiny.R;
 
-import android.shiny.data.PokemonService;
-import android.shiny.model.PokemonSpecies;
+// import android.shiny.data.PokemonService;
+//import android.shiny.model.PokemonSpecies;
+import android.shiny.api.PokemonService;
+import android.shiny.api.PokemonSpecies;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
