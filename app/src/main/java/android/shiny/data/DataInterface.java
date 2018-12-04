@@ -13,7 +13,7 @@ public interface DataInterface {
 
     ArrayList getPokemonVarieties(int pokemonId);
 
-    ArrayList getPokemonsPreview();
+    ArrayList getPokemonSpecies();
 
     void updatePokemonsList();
 

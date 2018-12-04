@@ -3,6 +3,12 @@ package android.shiny.data;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
+
+import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Entity;
+import android.shiny.api.PokemonSpecies;
+
 
 class Room implements PersistantData {
 
@@ -31,7 +37,15 @@ class Room implements PersistantData {
     }
 
     @Override
-    public ArrayList getPokemonsPreview() {
+    public ArrayList getPokemonsSpecies() {
         return null;
     }
+
+    @Override
+    public void setPokemonSpecies(List<PokemonSpecies.PokemonNames> pokemonSpeciesList) {
+        //TODO: Insertion de la liste dans la base de données
+    }
+
+
 }
+*/
