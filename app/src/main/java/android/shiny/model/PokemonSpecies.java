@@ -17,10 +17,10 @@ public class PokemonSpecies {
 
     public class PokemonNames {
         String name;
-        String url;
 
         public String getName() {
             return name;
         }
     }
+
 }

@@ -17,21 +17,30 @@ public class PokemonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pokemon);
 
+        pokemon_id = getIntent().getIntExtra("id", 0);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setViewPager(viewPager);
         viewPager.setOffscreenPageLimit(3);
 
         tabLayout = (TabLayout) findViewById(R.id.mytabs);
         tabLayout.setupWithViewPager(viewPager);
-
-        pokemon_id = getIntent().getIntExtra("id", 0);
     }
 
     private void setViewPager(ViewPager viewPager) {
+        Bundle b = new Bundle();
+        b.putInt("id", pokemon_id);
+
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager(), getApplicationContext());
-        adapter.addFragment(new PokemonFragment(), "1");
+
+        PokemonFragment pFrag = new PokemonFragment();
+        pFrag.setArguments(b);
+        adapter.addFragment(pFrag, "1");
+
         adapter.addFragment(new VoidFragment(), "2");
+
         adapter.addFragment(new VoidFragment(), "3");
+
         viewPager.setAdapter(adapter);
     }
 }
