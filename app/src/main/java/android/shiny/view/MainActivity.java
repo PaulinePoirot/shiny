@@ -10,9 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.EditorInfo;
 
 import java.util.List;
 
@@ -24,7 +29,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
     public RecyclerView rv_pokemon;
-
+    private  PokemonAdapter adapter;
     List<PokemonSpecies> list = null;
 
     @Override
@@ -35,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         rv_pokemon = findViewById(R.id.rv_pokemon);
         rv_pokemon.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        final PokemonAdapter adapter = new PokemonAdapter();
+        adapter = new PokemonAdapter();
 
         PokemonService pokemonService = new Retrofit.Builder()
                 .baseUrl(PokemonService.ENDPOINT)
@@ -64,7 +69,31 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Retrofit", "onFailure: " + t.getCause());
             }
         });
+    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+
+        searchView.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String string) {
+                adapter.getFilter().filter(string);
+                return false;
+            }
+        });
+
+        return super.onCreateOptionsMenu(menu);
     }
 }

@@ -1,6 +1,5 @@
 package android.shiny.view;
 
-import android.content.Intent;
 import android.shiny.R;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
