@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.support.v4.app.ActivityOptionsCompat;
 
 public class PokemonHolder extends RecyclerView.ViewHolder {
     public CardView card;
@@ -25,6 +26,7 @@ public class PokemonHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 Intent intent = new Intent(itemView.getContext(), PokemonActivity.class);
                 intent.putExtra("id", getAdapterPosition()+1);
+//                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, (View)iv_pokemon, "pokemon");
                 itemView.getContext().startActivity(intent);
             }
         });
