@@ -1,4 +1,4 @@
-package android.shiny.view;
+package android.shiny.view.main_activity;
 
 import android.shiny.R;
 import android.shiny.model.PokemonSpecies;

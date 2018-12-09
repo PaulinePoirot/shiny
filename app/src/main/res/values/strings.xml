@@ -1,4 +1,17 @@
 <resources>
     <string name="app_name">shiny</string>
     <string name="imgDescription">description</string>
+    <string name="statistics">Statistiques</string>
+    <string name="hp">PV</string>
+    <string name="attack">Attaque</string>
+    <string name="defence">Défense</string>
+    <string name="sp_attack">AttaqueSpé</string>
+    <string name="sp_defence">Défense Spé</string>
+    <string name="speed">Vitesse</string>
+    <string name="sprites">Apparence</string>
+    <string name="type">type</string>
+    <string name="WIP">Work in progress</string>
+    <string name="Fragment_1">infos</string>
+    <string name="Fragment_2">evolution</string>
+    <string name="Fragment_3">formes</string>
 </resources>

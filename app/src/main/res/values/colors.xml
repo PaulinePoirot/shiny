@@ -2,18 +2,10 @@
 <resources>
     <color name="colorPrimary">#f44334</color>
     <color name="colorPrimaryDark">#b90008</color>
-    <color name="colorAccent">#ff795e</color>
-
+    <color name="colorAccent">#cccccc</color>
 
     <color name="mainActivityBackgroundColor">#333333</color>
+    <color name="pokemonActivityBackgroundColor">#333333</color>
     <color name="rv_background_color">#ffffff</color>
     <color name="thumbColor">#f44334</color>
-
-<!--
-    <color name="mainActivityBackgroundColor">#ffcdd2</color>
-
-    <color name="rv_background_color">#ffebee</color>
-    <color name="thumbColor">#f44334</color>
--->
-
 </resources>
