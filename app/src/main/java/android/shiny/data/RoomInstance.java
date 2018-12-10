@@ -1,19 +1,26 @@
 package android.shiny.data;
 
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
-import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Room;
 import android.shiny.api.PokemonSpecies;
 
+import retrofit2.Response;
 
-class Room implements PersistantData {
 
-    public Room() {
 
+
+class RoomInstance extends AppCompatActivity implements PersistantData {
+
+    private Room species;
+    private static final String TAG = RoomInstance.class.getName();
+
+
+    public RoomInstance() {
     }
 
     @Override
@@ -42,10 +49,10 @@ class Room implements PersistantData {
     }
 
     @Override
-    public void setPokemonSpecies(List<PokemonSpecies.PokemonNames> pokemonSpeciesList) {
+    public void setPokemonSpecies(Response<PokemonSpecies> pokemonSpeciesList) {
         //TODO: Insertion de la liste dans la base de données
+        RoomDatabaseInitializer.populateAsync(RoomPokemonDatabase.getRoomPokemonDatabase(this));
+
     }
 
-
 }
-*/

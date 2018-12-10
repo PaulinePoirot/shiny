@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
+import retrofit2.Response;
+
 public interface PersistantData {
 
     Hashtable getPokemonById(int pokemonId);
@@ -18,6 +20,6 @@ public interface PersistantData {
 
     ArrayList getPokemonsSpecies();
 
-    void setPokemonSpecies(List<PokemonSpecies.PokemonNames> pokemonSpeciesList);
+    void setPokemonSpecies(Response<PokemonSpecies> pokemonSpeciesList);
 
 }

@@ -1,8 +1,11 @@
 package android.shiny.api;
 
+import android.arch.persistence.room.Entity;
+
 import java.util.List;
 
 public class PokemonSpecies {
+
     int count;
 
     List<PokemonNames> results;

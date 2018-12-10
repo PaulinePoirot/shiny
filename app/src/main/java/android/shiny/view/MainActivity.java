@@ -10,6 +10,7 @@ import android.shiny.api.PokemonService;
 import android.shiny.api.PokemonSpecies;
 
 
+import android.shiny.data.Data;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -30,9 +31,13 @@ public class MainActivity extends AppCompatActivity {
     public RecyclerView rv_pokemon;
 
     List<PokemonSpecies> list = null;
+    Data data = new Data();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        data.updatePokemonsList();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -50,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         pokemonService.listPokemons().enqueue(new Callback<PokemonSpecies>() {
             @Override
             public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
+
+                data.updatePokemonsList();
+
                 adapter.setPokemons(response.body().getResults());
 
                 Context context = rv_pokemon.getContext();

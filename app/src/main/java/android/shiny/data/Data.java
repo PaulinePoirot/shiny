@@ -1,17 +1,12 @@
 package android.shiny.data;
 
-import android.content.Context;
-import android.shiny.R;
 import android.shiny.api.PokemonService;
 import android.shiny.api.PokemonSpecies;
 import android.shiny.view.PokemonAdapter;
 import android.util.Log;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Data implements DataInterface {
 
-    private Room room = new Room();
+    private RoomInstance room = new RoomInstance();
 
     public Data() {
 
