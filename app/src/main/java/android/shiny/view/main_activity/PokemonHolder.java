@@ -26,8 +26,8 @@ public class PokemonHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 Intent intent = new Intent(itemView.getContext(), PokemonActivity.class);
                 intent.putExtra("id", getAdapterPosition()+1);
-                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, (View)sprite, "pokemon");
-                itemView.getContext().startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(MainActivity.this, sprite, "pokemon");
+                itemView.getContext().startActivity(intent, options.toBundle());
             }
         });
     }
