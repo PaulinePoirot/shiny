@@ -21,7 +21,7 @@
 
         <ImageView
             android:id="@+id/artwork"
-            android:transitionName="pokemon"
+            android:transitionName="pokemonTransition"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:padding="8dp"

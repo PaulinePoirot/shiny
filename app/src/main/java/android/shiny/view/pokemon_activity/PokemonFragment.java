@@ -20,9 +20,7 @@ public class PokemonFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         pokeId = this.getArguments().getInt("id");
-
         View view = inflater.inflate(R.layout.fragment_pokemon_infos, container, false);
 
         artwork = (ImageView) view.findViewById(R.id.artwork);
@@ -36,12 +34,9 @@ public class PokemonFragment extends Fragment {
 
 
 
-        //sprite = (ImageView) view.findViewById(R.id.sprite);
-        //sprite_shiny = (ImageView) view.findViewById(R.id.sprite_shiny);
-
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-7G/197.png").into(sprite);
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/artworks/197.png").into(sprite);
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-shinies-7G/197.png").into(sprite_shiny);
+//      Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-7G/197.png").into(sprite);
+//      Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/artworks/197.png").into(sprite);
+//      Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-shinies-7G/197.png").into(sprite_shiny);
 
         return view;
     }
