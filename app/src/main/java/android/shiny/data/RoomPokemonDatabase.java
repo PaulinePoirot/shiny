@@ -5,6 +5,8 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
+import java.util.ArrayList;
+
 @Database(entities = {RoomPokemonSpecies.class}, version = 1)
 public abstract class RoomPokemonDatabase extends RoomDatabase {
 
@@ -12,12 +14,10 @@ public abstract class RoomPokemonDatabase extends RoomDatabase {
     public abstract RoomPokemonSpeciesDao roomPokemonSpeciesDao();
 
 
-    static RoomPokemonDatabase getRoomPokemonDatabase(Context context) {
+    public static RoomPokemonDatabase getRoomPokemonDatabase(Context context) {
+
         if (INSTANCE == null) {
-            INSTANCE = Room.databaseBuilder(context.getApplicationContext(), RoomPokemonDatabase.class, "pokemonSpecies")
-                    // allow queries on the main thread.
-                    // Don't do this on a real app! See PersistenceBasicSample for an example.
-                    .allowMainThreadQueries()
+            INSTANCE = Room.databaseBuilder(context, RoomPokemonDatabase.class, "pokemonSpecies")
                     .build();
         }
         return INSTANCE;
@@ -26,5 +26,9 @@ public abstract class RoomPokemonDatabase extends RoomDatabase {
     public static void destroyInstance() {
         INSTANCE = null;
     }
-
+/*
+    public void setPokemonSpecies(ArrayList<RoomPokemonSpecies> roomPokemonSpeciesArrayLists) {
+        INSTANCE.roomPokemonSpeciesDao().setPokemonSpecies(roomPokemonSpeciesArrayLists);
+    }
+*/
 }

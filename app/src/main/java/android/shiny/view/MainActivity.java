@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -30,13 +31,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class MainActivity extends AppCompatActivity {
     public RecyclerView rv_pokemon;
 
-    List<PokemonSpecies> list = null;
-    Data data = new Data();
+    private List<PokemonSpecies.PokemonNames> list;
+    Data data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        data.updatePokemonsList();
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -44,7 +43,12 @@ public class MainActivity extends AppCompatActivity {
         rv_pokemon = findViewById(R.id.rv_pokemon);
         rv_pokemon.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        final PokemonAdapter adapter = new PokemonAdapter();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         PokemonService pokemonService = new Retrofit.Builder()
                 .baseUrl(PokemonService.ENDPOINT)
@@ -56,18 +60,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
 
-                data.updatePokemonsList();
-
-                adapter.setPokemons(response.body().getResults());
-
-                Context context = rv_pokemon.getContext();
-                LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_fall_down);
-                rv_pokemon.setAdapter(adapter);
-
-                rv_pokemon.setLayoutAnimation(controller);
-
-                rv_pokemon.getAdapter().notifyDataSetChanged();
-                rv_pokemon.scheduleLayoutAnimation();
+                try {
+                    list = response.body().getResults();
+                } catch (NullPointerException e) {
+                    System.out.print("Connection error.");
+                }
+                data = new Data();
+                data.updatePokemonsList(list);
             }
 
             @Override
@@ -76,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Retrofit", "onFailure: " + t.getCause());
             }
         });
-
 
     }
 }

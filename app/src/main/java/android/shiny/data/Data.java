@@ -7,6 +7,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -16,10 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Data implements DataInterface {
 
-    private RoomInstance room = new RoomInstance();
+    private RoomInstance room;
 
     public Data() {
-
+        room = new RoomInstance();
     }
 
     public Hashtable getPokemonById(int pokemonId) {
@@ -42,30 +43,9 @@ public class Data implements DataInterface {
         return room.getPokemonsSpecies();
     }
 
-    public void updatePokemonsList() {
-        // TODO : Implémentation de l'API.
-
-        final PokemonAdapter adapter = new PokemonAdapter();
-
-        PokemonService pokemonService = new Retrofit.Builder()
-                .baseUrl(PokemonService.ENDPOINT)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(PokemonService.class);
-
-        pokemonService.listPokemons().enqueue(new Callback<PokemonSpecies>() {
-            @Override
-            public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
+    public void updatePokemonsList(List<PokemonSpecies.PokemonNames> response) {
                 room.setPokemonSpecies(response);
+        }
 
-            }
-
-            @Override
-            public void onFailure(Call<PokemonSpecies> call, Throwable t) {
-                Log.e("Retrofit", "onFailure: " + t.getMessage());
-                Log.e("Retrofit", "onFailure: " + t.getCause());
-            }
-        });
-
-    }
 }
+

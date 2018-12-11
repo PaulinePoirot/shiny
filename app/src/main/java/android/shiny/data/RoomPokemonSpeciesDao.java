@@ -8,16 +8,17 @@ import android.content.ClipData;
 import android.shiny.api.PokemonSpecies;
 import android.shiny.data.RoomPokemonSpecies;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
 public interface RoomPokemonSpeciesDao {
 
     @Insert
-    void setPokemonSpecies(RoomPokemonSpecies roomPokemonSpecies);
+    void setPokemonSpecies(ArrayList<RoomPokemonSpecies> roomPokemonSpeciesArrayList);
+//    void setPokemonSpecies(RoomPokemonSpecies roomPokemonSpecies);
 
-    /*
     @Query("SELECT * FROM pokemonSpecies")
-    PokemonSpecies getPokemonSpeciesList();
-    */
+    List<RoomPokemonSpecies> getPokemonSpeciesList();
+//    PokemonSpecies getPokemonSpeciesList();
 }

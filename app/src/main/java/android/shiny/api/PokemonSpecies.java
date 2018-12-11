@@ -6,13 +6,15 @@ import java.util.List;
 
 public class PokemonSpecies {
 
-    int count;
+//    private int count;
 
-    List<PokemonNames> results;
+    private List<PokemonNames> results;
 
+    /*
     public int getCount() {
         return count;
     }
+    */
 
     public List<PokemonNames> getResults() {
         return results;
@@ -22,8 +24,13 @@ public class PokemonSpecies {
         String name;
         String url;
 
+
         public String getName() {
             return name;
+        }
+
+        public String getUrl() {
+            return url;
         }
     }
 }

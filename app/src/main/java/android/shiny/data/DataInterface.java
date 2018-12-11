@@ -1,7 +1,10 @@
 package android.shiny.data;
 
+import android.shiny.api.PokemonSpecies;
+
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 
 public interface DataInterface {
 
@@ -15,6 +18,6 @@ public interface DataInterface {
 
     ArrayList getPokemonSpecies();
 
-    void updatePokemonsList();
+    void updatePokemonsList(List<PokemonSpecies.PokemonNames> response);
 
 }

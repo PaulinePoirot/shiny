@@ -1,22 +1,13 @@
 package android.shiny.data;
 
-import android.arch.persistence.db.SupportSQLiteOpenHelper;
 import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.PrimaryKey;
 import android.shiny.api.PokemonSpecies;
-import android.support.annotation.NonNull;
-
-import java.util.List;
-
 
 @Entity(tableName = "pokemonSpecies")
-public class RoomPokemonSpecies implements RoomPokemonSpeciesDao {
-
-    public RoomPokemonSpecies() {
-    }
+public class RoomPokemonSpecies {
+//    public class RoomPokemonSpecies implements RoomPokemonSpeciesDao {
 
     @PrimaryKey
     @ColumnInfo(name = "pokemonId")
@@ -52,13 +43,14 @@ public class RoomPokemonSpecies implements RoomPokemonSpeciesDao {
         this.url = url;
     }
 
+ /*   @Override
     public PokemonSpecies getPokemonSpeciesList() {
         return null;
     }
 
     @Override
     public void setPokemonSpecies(RoomPokemonSpecies roomPokemonSpecies) {
-    }
+    }   */
 }
 
 

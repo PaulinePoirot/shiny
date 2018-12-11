@@ -1,5 +1,6 @@
 package android.shiny.data;
 
+import android.os.Bundle;
 import android.shiny.api.PokemonSpecies;
 
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public interface PersistantData {
 
     ArrayList getPokemonsSpecies();
 
-    void setPokemonSpecies(Response<PokemonSpecies> pokemonSpeciesList);
+    void setPokemonSpecies(List<PokemonSpecies.PokemonNames> pokemonSpeciesList);
+//    void setPokemonSpecies(Response<PokemonSpecies> pokemonSpeciesList);
 
 }
