@@ -1,31 +1,22 @@
 package android.shiny.view;
 
 import android.shiny.R;
-import android.shiny.model.PokemonSpecies;
+import android.shiny.data.Pokemon;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implements Filterable {
-    private List<PokemonSpecies.PokemonNames> pokemons;
-    private List<PokemonSpecies.PokemonNames> pokemonsFull;
+public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //implements Filterable {
+    private List<Pokemon> pokemonsFull = new ArrayList<>();
+    private List<Pokemon> pokemons = new ArrayList<>();
 
     public PokemonAdapter() {
         super();
-    }
-
-    public void setPokemons(List<PokemonSpecies.PokemonNames> pokemons) {
-        this.pokemons = pokemons;
-        this.pokemonsFull = new ArrayList<>(pokemons);
     }
 
     @NonNull
@@ -37,8 +28,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
 
     @Override
     public void onBindViewHolder(@NonNull PokemonHolder pokemonHolder, int position) {
+        // getting data happens HERE
+        Pokemon current = pokemons.get(position);
+        pokemonHolder.name.setText(current.getName_fr());
 
-        PokemonSpecies.PokemonNames actualPokemon = pokemons.get(position);
+
+        /*PokemonSpecies.PokemonNames actualPokemon = pokemons.get(position);
         String actualPokemonName = actualPokemon.getName();
 
         int id = pokemonsFull.indexOf(actualPokemon);
@@ -47,6 +42,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
 
         String URL = "https://www.pokebip.com/pokedex-images/artworks/" + (id + 1) + ".png";
         Glide.with(pokemonHolder.itemView.getContext()).load(URL).into(pokemonHolder.sprite);
+
+        */
     }
 
     @Override
@@ -57,6 +54,12 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
         return pokemons.size();
     }
 
+    public void setPokemons(List<Pokemon> pokemons) {
+        this.pokemons = pokemons;
+        notifyDataSetChanged();
+    }
+
+    /*
     @Override
     public Filter getFilter() {
         Filter pokemonFilter = new Filter() {
@@ -92,4 +95,6 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
 
         return pokemonFilter;
     }
+
+    */
 }

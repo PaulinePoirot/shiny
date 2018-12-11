@@ -1,36 +1,26 @@
 package android.shiny.view;
 
-import android.content.Context;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 
 import android.shiny.R;
 
-import android.shiny.data.PokemonService;
-import android.shiny.model.PokemonSpecies;
+import android.shiny.data.Pokemon;
+import android.shiny.data.PokemonViewModel;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.animation.AnimationUtils;
-import android.view.animation.LayoutAnimationController;
-import android.view.inputmethod.EditorInfo;
+import android.widget.Toast;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class MainActivity extends AppCompatActivity {
+    private PokemonViewModel pokemonViewModel;
+
     public RecyclerView rv_pokemon;
-    private  PokemonAdapter adapter;
-    List<PokemonSpecies> list = null;
+    public PokemonAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +29,23 @@ public class MainActivity extends AppCompatActivity {
 
         rv_pokemon = findViewById(R.id.rv_pokemon);
         rv_pokemon.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        rv_pokemon.setHasFixedSize(true); // a enlever je pense
 
         adapter = new PokemonAdapter();
+        rv_pokemon.setAdapter(adapter);
+
+        pokemonViewModel = ViewModelProviders.of(this).get(PokemonViewModel.class);
+        pokemonViewModel.getAllPokemons().observe(this, new Observer<List<Pokemon>>() {
+            @Override
+            public void onChanged(@Nullable List<Pokemon> pokemonEntities) {
+                Toast.makeText(MainActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
+                adapter.setPokemons(pokemonEntities);
+            }
+        });
+
+        /*adapter = new PokemonAdapter();
+
+
 
         PokemonService pokemonService = new Retrofit.Builder()
                 .baseUrl(PokemonService.ENDPOINT)
@@ -68,9 +73,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.e("Retrofit", "onFailure: " + t.getMessage());
                 Log.e("Retrofit", "onFailure: " + t.getCause());
             }
-        });
+        });*/
     }
 
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -95,5 +101,5 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 }
