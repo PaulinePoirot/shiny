@@ -13,7 +13,6 @@ public class PokemonRepository {
     public PokemonRepository(Application application) {
         PokemonDatabase database = PokemonDatabase.getInstance(application);
         pokemonDAO = database.pokemonDAO();
-
         allPokemons = pokemonDAO.getAllPokemons();
     }
 

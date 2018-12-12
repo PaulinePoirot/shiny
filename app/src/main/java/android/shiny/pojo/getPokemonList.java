@@ -1,8 +1,8 @@
-package android.shiny.model;
+package android.shiny.pojo;
 
 import java.util.List;
 
-public class PokemonSpecies {
+public class getPokemonList {
     int count;
 
     List<PokemonNames> results;

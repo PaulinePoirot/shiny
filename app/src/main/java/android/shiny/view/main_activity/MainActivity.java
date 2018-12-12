@@ -12,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Toast;
 
 import java.util.List;
@@ -53,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
                 .build()
                 .create(PokemonService.class);
 
-        pokemonService.listPokemons().enqueue(new Callback<PokemonSpecies>() {
+        pokemonService.listPokemons().enqueue(new Callback<getPokemonList>() {
             @Override
-            public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
+            public void onResponse(Call<getPokemonList> call, Response<getPokemonList> response) {
                 adapter.setPokemons(response.body().getResults());
 
                 Context context = rv_pokemon.getContext();
@@ -69,14 +74,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<PokemonSpecies> call, Throwable t) {
+            public void onFailure(Call<getPokemonList> call, Throwable t) {
                 Log.e("Retrofit", "onFailure: " + t.getMessage());
                 Log.e("Retrofit", "onFailure: " + t.getCause());
             }
         });*/
     }
 
-    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -95,11 +99,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String string) {
-                adapter.getFilter().filter(string);
+                //adapter.getFilter().filter(string);
                 return false;
             }
         });
 
         return super.onCreateOptionsMenu(menu);
-    }*/
+    }
 }

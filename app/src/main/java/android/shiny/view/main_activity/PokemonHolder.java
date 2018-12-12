@@ -12,13 +12,13 @@ import android.widget.TextView;
 public class PokemonHolder extends RecyclerView.ViewHolder {
     public CardView card;
     public TextView name;
-    public ImageView sprite;
+    public ImageView artwork;
 
     public PokemonHolder(final View itemView) {
         super(itemView);
         card = itemView.findViewById(R.id.cardview);
         name = itemView.findViewById(R.id.tv_pokemon);
-        sprite = itemView.findViewById(R.id.iv_pokemon);
+        artwork = itemView.findViewById(R.id.iv_pokemon);
 
         card.setOnClickListener(new View.OnClickListener() {
             @Override

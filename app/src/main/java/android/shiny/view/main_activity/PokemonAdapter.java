@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,10 +32,10 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
     public void onBindViewHolder(@NonNull PokemonHolder pokemonHolder, int position) {
         // getting data happens HERE
         Pokemon current = pokemons.get(position);
-        pokemonHolder.name.setText(current.getName_fr());
+        pokemonHolder.name.setText("#" + String.format("%03d", current.getId()) + " " + current.getName_fr());
+        Glide.with(pokemonHolder.itemView.getContext()).load(current.getUrl_artwork()).into(pokemonHolder.artwork);
 
-
-        /*PokemonSpecies.PokemonNames actualPokemon = pokemons.get(position);
+        /*getPokemonList.PokemonNames actualPokemon = pokemons.get(position);
         String actualPokemonName = actualPokemon.getName();
 
         int id = pokemonsFull.indexOf(actualPokemon);
@@ -55,7 +57,8 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
     }
 
     public void setPokemons(List<Pokemon> pokemons) {
-        this.pokemons = pokemons;
+        this.pokemons.clear();
+        this.pokemons.addAll(pokemons);
         notifyDataSetChanged();
     }
 
@@ -65,14 +68,14 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
         Filter pokemonFilter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<PokemonSpecies.PokemonNames> filteredList = new ArrayList<>();
+                List<getPokemonList.PokemonNames> filteredList = new ArrayList<>();
 
                 if (constraint == null || constraint.length() == 0) {
                     filteredList.addAll(pokemonsFull);
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (PokemonSpecies.PokemonNames p : pokemonsFull) {
+                    for (getPokemonList.PokemonNames p : pokemonsFull) {
                         if (p.getName().toLowerCase().contains(filterPattern)){
                             filteredList.add(p);
                         }
