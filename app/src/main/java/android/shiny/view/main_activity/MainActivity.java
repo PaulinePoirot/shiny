@@ -17,7 +17,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -43,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
         pokemonViewModel.getAllPokemons().observe(this, new Observer<List<Pokemon>>() {
             @Override
             public void onChanged(@Nullable List<Pokemon> pokemonEntities) {
-                Toast.makeText(MainActivity.this, "onChanged", Toast.LENGTH_SHORT).show();
                 adapter.setPokemons(pokemonEntities);
             }
         });
