@@ -16,6 +16,8 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -54,6 +56,13 @@ public abstract class PokemonDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private PokemonDAO pokemonDAO;
+        private final CountDownLatch waiting = new CountDownLatch(1);
+
+        final PokemonService pokemonService = new Retrofit.Builder()
+                .baseUrl(PokemonService.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(PokemonService.class);
 
         private PopulateDbAsyncTask(PokemonDatabase db) {
             pokemonDAO = db.pokemonDAO();
@@ -66,29 +75,94 @@ public abstract class PokemonDatabase extends RoomDatabase {
          */
         @Override
         protected Void doInBackground(Void... voids) {
-
-            Log.e(TAG, "doInBackground: LANCEMENT");
-
-            final PokemonService pokemonService = new Retrofit.Builder()
-                    .baseUrl(PokemonService.ENDPOINT)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build()
-                    .create(PokemonService.class);
-
             pokemonService.listPokemons().enqueue(new retrofit2.Callback<getPokemonList>() {
                 @Override
                 public void onResponse(Call<getPokemonList> call, final Response<getPokemonList> response) {
-
-
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             List<getPokemonList.PokemonNames> list = response.body().getResults();
-                            for (getPokemonList.PokemonNames pName : list) {
-                                int id = list.indexOf(pName) + 1;
-                                Pokemon mPokemon = new Pokemon(id, pName.getName(), pName.getName());
-                                Log.e(TAG, "run: insertion pokemon"+id);
-                                pokemonDAO.insert(mPokemon);
+                            for (final getPokemonList.PokemonNames pName : list) {
+                                final int id = list.indexOf(pName) + 1;
+                                final Pokemon mPoke = new Pokemon(id, pName.getName(), "###");
+
+                                pokemonService.pokemonFrName("" + id).enqueue(new retrofit2.Callback<getFrName>() {
+                                    @Override
+                                    public void onResponse(Call<getFrName> call, final Response<getFrName> response) {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                List<getFrName.PokemonNamesWithID> nameList = response.body().getNames();
+                                                String frName = nameList.get(6).getName();
+                                                Log.e(TAG, "run: insertion pokemon " + id);
+                                                mPoke.setName_fr(frName);
+                                                pokemonDAO.update(mPoke);
+                                            }
+                                        }).start();;
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<getFrName> call, Throwable t) {
+
+                                    }
+                                });
+
+                                pokemonService.getPokemonTypes("" + id).enqueue(new retrofit2.Callback<getPokemonTypes>() {
+                                    @Override
+                                    public void onResponse(Call<getPokemonTypes> call, final Response<getPokemonTypes> response) {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                String type1 = response.body().getTypes().get(0).getTypeObject().getName();
+                                                String type2 = null;
+                                                if (response.body().getTypes().size() > 1) {
+                                                    type2 = response.body().getTypes().get(1).getTypeObject().getName();
+                                                }
+                                                mPoke.setType1(type1);
+                                                mPoke.setType2(type2);
+                                                pokemonDAO.update(mPoke);
+                                            }
+                                        }).start();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<getPokemonTypes> call, Throwable t) {
+
+                                    }
+                                });
+
+                                pokemonService.getPokemonStats(""+id).enqueue(new retrofit2.Callback<getPokemonStats>() {
+                                    @Override
+                                    public void onResponse(Call<getPokemonStats> call, final Response<getPokemonStats> response) {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                int speed = response.body().getStats().get(0).getBaseStat();
+                                                int defense_sp = response.body().getStats().get(1).getBaseStat();
+                                                int attack_sp = response.body().getStats().get(2).getBaseStat();
+                                                int defense = response.body().getStats().get(3).getBaseStat();
+                                                int attack = response.body().getStats().get(4).getBaseStat();
+                                                int health = response.body().getStats().get(5).getBaseStat();
+
+                                                mPoke.setSpeed(speed);
+                                                mPoke.setAttack(attack);
+                                                mPoke.setDefense(defense);
+                                                mPoke.setAttack_sp(attack_sp);
+                                                mPoke.setDefense_sp(defense_sp);
+                                                mPoke.setHealth(health);
+                                                pokemonDAO.update(mPoke);
+                                            }
+                                        }).start();
+                                    }
+
+                                    @Override
+                                    public void onFailure(Call<getPokemonStats> call, Throwable t) {
+
+                                    }
+                                });
+
+                                pokemonDAO.insert(mPoke);
+
                             }
                         }
                     }).start();
@@ -99,6 +173,36 @@ public abstract class PokemonDatabase extends RoomDatabase {
                     return;
                 }
             });
+
+            /*try {
+                waiting.await();
+                wait(1000);
+            } catch (InterruptedException ie) {
+                ie.printStackTrace();
+            }
+
+            Log.e(TAG, "doInBackground: on commence la modification"     );
+
+            try {
+                for (final Pokemon mPoke : pokemonDAO.getAllPokemons().getValue()) {
+                    pokemonService.pokemonFrName("" + mPoke.getId()).enqueue(new retrofit2.Callback<getFrName>() {
+                        @Override
+                        public void onResponse(Call<getFrName> call, Response<getFrName> response) {
+                            List<getFrName.PokemonNamesWithID> nameList = response.body().getNames();
+                            String frName = nameList.get(6).getName();
+                            mPoke.setName_fr(frName);
+                            pokemonDAO.update(mPoke);
+                        }
+
+                        @Override
+                        public void onFailure(Call<getFrName> call, Throwable t) {
+                            return;
+                        }
+                    });
+                }
+            }catch (NullPointerException npe) {
+                npe.printStackTrace();
+            }*/
 
             /*try {
                 Response<getPokemonList> response = pokemonService.listPokemons().execute();
@@ -145,5 +249,6 @@ public abstract class PokemonDatabase extends RoomDatabase {
             }*/
             return null;
         }
+
     }
 }
