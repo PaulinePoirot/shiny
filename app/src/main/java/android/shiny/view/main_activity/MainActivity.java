@@ -1,4 +1,4 @@
-package android.shiny.view;
+package android.shiny.view.main_activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
