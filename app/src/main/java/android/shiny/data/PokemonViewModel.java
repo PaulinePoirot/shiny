@@ -33,6 +33,10 @@ public class PokemonViewModel extends AndroidViewModel {
         repository.deleteAllPokemons();
     }
 
+    public Pokemon getPokemon(int id) {
+        return repository.getPokemon(id);
+    }
+
     public LiveData<List<Pokemon>> getAllPokemons() {
         return repository.getAllPokemons();
     }

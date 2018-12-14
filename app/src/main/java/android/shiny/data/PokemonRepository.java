@@ -5,6 +5,7 @@ import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class PokemonRepository {
     private PokemonDAO pokemonDAO;
@@ -34,6 +35,16 @@ public class PokemonRepository {
 
     public LiveData<List<Pokemon>> getAllPokemons() {
         return allPokemons;
+    }
+
+    public Pokemon getPokemon(int id) {
+        Pokemon p = null;
+        try {
+            p = new getPokemonAsyncTask(pokemonDAO).execute(id-1).get();
+        } catch (ExecutionException | InterruptedException ee) {
+            ee.printStackTrace();
+        }
+        return p;
     }
 
     private static class InsertPokemonAsyncTask extends AsyncTask<Pokemon, Void, Void> {
@@ -85,6 +96,16 @@ public class PokemonRepository {
         protected Void doInBackground(Void... voids) {
             pokemonDAO.deleteAllPokemons();
             return null;
+        }
+    }
+
+    private static class getPokemonAsyncTask extends AsyncTask<Integer, Void, Pokemon> {
+        private PokemonDAO pokemonDAO;
+
+        private getPokemonAsyncTask(PokemonDAO pokemonDAO) {this.pokemonDAO = pokemonDAO;}
+        @Override
+        protected Pokemon doInBackground(Integer... integers) {
+            return pokemonDAO.getPokemons().get(integers[0]);
         }
     }
 }

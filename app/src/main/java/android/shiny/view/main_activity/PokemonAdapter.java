@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //implements Filterable {
-    private List<Pokemon> pokemonsFull = new ArrayList<>();
+    //private List<Pokemon> pokemonsFull = new ArrayList<>();
     private List<Pokemon> pokemons = new ArrayList<>();
 
     public PokemonAdapter() {
@@ -30,22 +30,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
 
     @Override
     public void onBindViewHolder(@NonNull PokemonHolder pokemonHolder, int position) {
-        // getting data happens HERE
         Pokemon current = pokemons.get(position);
         pokemonHolder.name.setText("#" + String.format("%03d", current.getId()) + " " + current.getName_fr());
         Glide.with(pokemonHolder.itemView.getContext()).load(current.getUrl_artwork()).into(pokemonHolder.artwork);
-
-        /*getPokemonList.PokemonNames actualPokemon = pokemons.get(position);
-        String actualPokemonName = actualPokemon.getName();
-
-        int id = pokemonsFull.indexOf(actualPokemon);
-
-        pokemonHolder.name.setText("#" + String.format("%03d", id + 1) + " " + actualPokemonName);
-
-        String URL = "https://www.pokebip.com/pokedex-images/artworks/" + (id + 1) + ".png";
-        Glide.with(pokemonHolder.itemView.getContext()).load(URL).into(pokemonHolder.sprite);
-
-        */
     }
 
     @Override
@@ -62,21 +49,21 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
         notifyDataSetChanged();
     }
 
-    /*
-    @Override
+
+    /*@Override
     public Filter getFilter() {
         Filter pokemonFilter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<getPokemonList.PokemonNames> filteredList = new ArrayList<>();
+                List<Pokemon> filteredList = new ArrayList<>();
 
                 if (constraint == null || constraint.length() == 0) {
                     filteredList.addAll(pokemonsFull);
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (getPokemonList.PokemonNames p : pokemonsFull) {
-                        if (p.getName().toLowerCase().contains(filterPattern)){
+                    for ( Pokemon p : pokemonsFull) {
+                        if (p.getName_fr().toLowerCase().contains(filterPattern)){
                             filteredList.add(p);
                         }
                     }
@@ -97,7 +84,5 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //impl
         };
 
         return pokemonFilter;
-    }
-
-    */
+    }*/
 }

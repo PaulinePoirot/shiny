@@ -27,5 +27,6 @@ public interface PokemonDAO {
     @Query("SELECT * from pokemon_table ORDER BY id ASC")
     LiveData<List<Pokemon>> getAllPokemons();
 
-
+    @Query("SELECT * from pokemon_table ORDER BY id ASC")
+    List<Pokemon> getPokemons();
 }

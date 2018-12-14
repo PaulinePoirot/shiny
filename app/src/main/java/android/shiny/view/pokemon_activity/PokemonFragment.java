@@ -1,7 +1,10 @@
 package android.shiny.view.pokemon_activity;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.shiny.R;
+import android.shiny.data.Pokemon;
+import android.shiny.data.PokemonViewModel;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -20,32 +23,20 @@ public class PokemonFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        pokeId = this.getArguments().getInt("id");
-
         View view = inflater.inflate(R.layout.fragment_pokemon_infos, container, false);
+        pokeId = this.getArguments().getInt("id");
+        Pokemon myPokemon = ViewModelProviders.of(this).get(PokemonViewModel.class).getPokemon(pokeId);
 
         artwork = (ImageView) view.findViewById(R.id.artwork);
         sprite = (ImageView) view.findViewById(R.id.sprite);
         shiny = (ImageView) view.findViewById(R.id.sprite_shiny);
 
+        getActivity().setTitle(myPokemon.getName_fr()+" - "+myPokemon.getName_en());
 
-        Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/artworks/"+pokeId+".png").into(artwork);
-        Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-7G/"+pokeId+".png").into(sprite);
-        Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-shinies-7G/"+pokeId+".png").into(shiny);
-
-
-
-        //sprite = (ImageView) view.findViewById(R.id.sprite);
-        //sprite_shiny = (ImageView) view.findViewById(R.id.sprite_shiny);
-
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-7G/197.png").into(sprite);
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/artworks/197.png").into(sprite);
-//            Glide.with(getActivity()).load("https://www.pokebip.com/pokedex-images/sprites-shinies-7G/197.png").into(sprite_shiny);
+        Glide.with(getActivity()).load(myPokemon.getUrl_artwork()).into(artwork);
+        Glide.with(getActivity()).load(myPokemon.getUrl_sprite()).into(sprite);
+        Glide.with(getActivity()).load(myPokemon.getUrl_shiny()).into(shiny);
 
         return view;
     }
-
-
-
 }

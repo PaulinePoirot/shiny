@@ -14,13 +14,9 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 
-import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -56,7 +52,6 @@ public abstract class PokemonDatabase extends RoomDatabase {
 
     private static class PopulateDbAsyncTask extends AsyncTask<Void, Void, Void> {
         private PokemonDAO pokemonDAO;
-        private final CountDownLatch waiting = new CountDownLatch(1);
 
         final PokemonService pokemonService = new Retrofit.Builder()
                 .baseUrl(PokemonService.ENDPOINT)
@@ -75,9 +70,11 @@ public abstract class PokemonDatabase extends RoomDatabase {
          */
         @Override
         protected Void doInBackground(Void... voids) {
+            Log.e(TAG, "doInBackground: INIT");
             pokemonService.listPokemons().enqueue(new retrofit2.Callback<getPokemonList>() {
                 @Override
                 public void onResponse(Call<getPokemonList> call, final Response<getPokemonList> response) {
+                    Log.e(TAG, "doInBackground: THREAD 1");
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
