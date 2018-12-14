@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">shiny</string>
     <string name="imgDescription">description</string>
+    <string name="search">recherche</string>
 </resources>
