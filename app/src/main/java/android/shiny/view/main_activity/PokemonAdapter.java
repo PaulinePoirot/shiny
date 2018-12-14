@@ -1,31 +1,24 @@
-package android.shiny.view;
+package android.shiny.view.main_activity;
 
 import android.shiny.R;
-import android.shiny.model.PokemonSpecies;
+import android.shiny.data.Pokemon;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Filter;
-import android.widget.Filterable;
 
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implements Filterable {
-    private List<PokemonSpecies.PokemonNames> pokemons;
-    private List<PokemonSpecies.PokemonNames> pokemonsFull;
+public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> { //implements Filterable {
+    //private List<Pokemon> pokemonsFull = new ArrayList<>();
+    private List<Pokemon> pokemons = new ArrayList<>();
 
     public PokemonAdapter() {
         super();
-    }
-
-    public void setPokemons(List<PokemonSpecies.PokemonNames> pokemons) {
-        this.pokemons = pokemons;
-        this.pokemonsFull = new ArrayList<>(pokemons);
     }
 
     @NonNull
@@ -37,16 +30,9 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
 
     @Override
     public void onBindViewHolder(@NonNull PokemonHolder pokemonHolder, int position) {
-
-        PokemonSpecies.PokemonNames actualPokemon = pokemons.get(position);
-        String actualPokemonName = actualPokemon.getName();
-
-        int id = pokemonsFull.indexOf(actualPokemon);
-
-        pokemonHolder.name.setText("#" + String.format("%03d", id + 1) + " " + actualPokemonName);
-
-        String URL = "https://www.pokebip.com/pokedex-images/artworks/" + (id + 1) + ".png";
-        Glide.with(pokemonHolder.itemView.getContext()).load(URL).into(pokemonHolder.sprite);
+        Pokemon current = pokemons.get(position);
+        pokemonHolder.name.setText("#" + String.format("%03d", current.getId()) + " " + current.getName_fr());
+        Glide.with(pokemonHolder.itemView.getContext()).load(current.getUrl_artwork()).into(pokemonHolder.artwork);
     }
 
     @Override
@@ -57,20 +43,27 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
         return pokemons.size();
     }
 
-    @Override
+    public void setPokemons(List<Pokemon> pokemons) {
+        this.pokemons.clear();
+        this.pokemons.addAll(pokemons);
+        notifyDataSetChanged();
+    }
+
+
+    /*@Override
     public Filter getFilter() {
         Filter pokemonFilter = new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
-                List<PokemonSpecies.PokemonNames> filteredList = new ArrayList<>();
+                List<Pokemon> filteredList = new ArrayList<>();
 
                 if (constraint == null || constraint.length() == 0) {
                     filteredList.addAll(pokemonsFull);
                 } else {
                     String filterPattern = constraint.toString().toLowerCase().trim();
 
-                    for (PokemonSpecies.PokemonNames p : pokemonsFull) {
-                        if (p.getName().toLowerCase().contains(filterPattern)){
+                    for ( Pokemon p : pokemonsFull) {
+                        if (p.getName_fr().toLowerCase().contains(filterPattern)){
                             filteredList.add(p);
                         }
                     }
@@ -91,5 +84,5 @@ public class PokemonAdapter extends RecyclerView.Adapter<PokemonHolder> implemen
         };
 
         return pokemonFilter;
-    }
+    }*/
 }
